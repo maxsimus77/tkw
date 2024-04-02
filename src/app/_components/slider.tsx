@@ -1,43 +1,17 @@
 'use client'
-import * as React from "react"
-import Autoplay from "embla-carousel-autoplay"
-
-import { Card, CardContent } from "@/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+import React, { useEffect } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 
 export default function Slider() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  )
-
-  return (
-    <Carousel
-      plugins={[plugin.current]}
-      className="w-full max-w-xs"
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
-    >
-      <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
+    const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({delay: 2000})])
+    return (
+        <div className="embla mx-auto h-56 w-full border rounded-lg" ref={emblaRef}>
+            <div className="embla__container h-full">
+                <div className="embla__slide flex items-center justify-center">Slide 1</div>
+                <div className="embla__slide flex items-center justify-center">Slide 2</div>
+                <div className="embla__slide flex items-center justify-center">Slide 3</div>
             </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  )
+        </div>
+    )
 }
